@@ -5,6 +5,5 @@
     <item android:title="Add"
         android:id="@+id/miAdd"
         android:icon="@drawable/ic_add_circle_outline_24dp"
-        android:onClick="onAdd"
         app:showAsAction="ifRoom"/>
 </menu>
