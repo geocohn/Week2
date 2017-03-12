@@ -26,6 +26,11 @@ public class NytArticleArrayAdapter  extends ArrayAdapter<Article> {
     private final static String LOG_TAG = NytArticleArrayAdapter.class.getSimpleName();
     private final Context mContext;
 
+    private class ViewHolder {
+        ImageView ivThumb;
+        TextView tvHeadline;
+    }
+
     public NytArticleArrayAdapter(@NonNull Context context, @NonNull List<Article> articles) {
         super(context, 0, articles);
         mContext = context;
@@ -38,21 +43,27 @@ public class NytArticleArrayAdapter  extends ArrayAdapter<Article> {
 
         Log.d(LOG_TAG, "getView(" + position + ", " + convertView + ", " + parent + ")");
 
+        ViewHolder viewHolder;
          if (convertView == null) {
              LayoutInflater inflater = LayoutInflater.from(mContext);
              convertView = inflater.inflate(R.layout.list_item, parent, false);
+
+             viewHolder = new ViewHolder();
+             viewHolder.ivThumb = (ImageView) convertView.findViewById(R.id.ivThumb);
+             viewHolder.tvHeadline = (TextView) convertView.findViewById(R.id.tvHeadline);
+
+             convertView.setTag(viewHolder);
+         } else {
+             viewHolder = (ViewHolder) convertView.getTag();
          }
 
         Log.d(LOG_TAG, "imageUrl: " + article.getImageUrl() + ", headline: " + article.getHeadline());
 
-        ImageView ivThumb = (ImageView) convertView.findViewById(R.id.ivThumb);
-        TextView tvHeadline = (TextView) convertView.findViewById(R.id.tvHeadline);
-
-        ivThumb.setImageResource(0);
+        viewHolder.ivThumb.setImageResource(0);
         if (!TextUtils.isEmpty(article.getImageUrl())) {
-            Picasso.with(mContext).load(article.getImageUrl()).into(ivThumb);
+            Picasso.with(mContext).load(article.getImageUrl()).into(viewHolder.ivThumb);
         }
-        tvHeadline.setText(article.getHeadline());
+        viewHolder.tvHeadline.setText(article.getHeadline());
 
         return convertView;
     }
