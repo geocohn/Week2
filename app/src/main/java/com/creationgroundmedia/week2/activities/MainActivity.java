@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvArticleList = (RecyclerView) findViewById(R.id.rvArticlelist);
         rvArticleList.setAdapter(mAdapter);
         rvArticleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        onSearch();
     }
 
     @Override

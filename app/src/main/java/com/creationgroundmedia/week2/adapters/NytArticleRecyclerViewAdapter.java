@@ -1,8 +1,11 @@
 package com.creationgroundmedia.week2.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creationgroundmedia.week2.R;
+import com.creationgroundmedia.week2.activities.DetailActivity;
 import com.creationgroundmedia.week2.models.Article;
 import com.squareup.picasso.Picasso;
 
@@ -43,7 +47,7 @@ public class NytArticleRecyclerViewAdapter extends RecyclerView.Adapter<NytArtic
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Article article = mArticles.get(position);
+        final Article article = mArticles.get(position);
 
         Log.d(LOG_TAG, "imageUrl: " + article.getImageUrl() + ", headline: " + article.getHeadline());
 
@@ -52,6 +56,17 @@ public class NytArticleRecyclerViewAdapter extends RecyclerView.Adapter<NytArtic
             Picasso.with(mContext).load(article.getImageUrl()).into(holder.ivThumb);
         }
         holder.tvHeadline.setText(article.getHeadline());
+
+        holder.cvContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                Bundle extras = new Bundle();
+                extras.putParcelable("article", article);
+                intent.putExtras(extras);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,12 +75,14 @@ public class NytArticleRecyclerViewAdapter extends RecyclerView.Adapter<NytArtic
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cvContainer;
         ImageView ivThumb;
         TextView tvHeadline;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            cvContainer = (CardView) itemView.findViewById(R.id.cvContainer);
             ivThumb = (ImageView) itemView.findViewById(R.id.ivThumb);
             tvHeadline = (TextView) itemView.findViewById(R.id.tvHeadline);
         }
