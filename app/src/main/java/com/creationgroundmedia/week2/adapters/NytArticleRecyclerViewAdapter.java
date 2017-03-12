@@ -60,11 +60,7 @@ public class NytArticleRecyclerViewAdapter extends RecyclerView.Adapter<NytArtic
         holder.cvContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                Bundle extras = new Bundle();
-                extras.putParcelable("article", article);
-                intent.putExtras(extras);
-                mContext.startActivity(intent);
+                DetailActivity.start(mContext, article);
             }
         });
     }
