@@ -18,8 +18,8 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
-    <ListView
-        android:id="@+id/lvArticlelist"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvArticlelist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

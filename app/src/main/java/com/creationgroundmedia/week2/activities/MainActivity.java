@@ -2,6 +2,8 @@ package com.creationgroundmedia.week2.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 
 import com.creationgroundmedia.week2.*;
 import com.creationgroundmedia.week2.adapters.NytArticleArrayAdapter;
+import com.creationgroundmedia.week2.adapters.NytArticleRecyclerViewAdapter;
 import com.creationgroundmedia.week2.models.Article;
 import com.loopj.android.http.*;
 
@@ -24,7 +27,7 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Article> mArticles;
-    private NytArticleArrayAdapter mAdapter;
+    private NytArticleRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mArticles = new ArrayList<>();
-        mAdapter = new NytArticleArrayAdapter(this, mArticles);
+        mAdapter = new NytArticleRecyclerViewAdapter(this, mArticles);
 
-        ListView lvArticleList = (ListView) findViewById(R.id.lvArticlelist);
-        lvArticleList.setAdapter(mAdapter);
-
+        RecyclerView rvArticleList = (RecyclerView) findViewById(R.id.rvArticlelist);
+        rvArticleList.setAdapter(mAdapter);
+        rvArticleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
