@@ -2,6 +2,7 @@ package com.creationgroundmedia.week2.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,11 +41,12 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Article article = getIntent().getParcelableExtra(ARTICLE);
+        final Article article = getIntent().getParcelableExtra(ARTICLE);
 
         TextView tvHeadline = (TextView) findViewById(R.id.tvHeadline);
         ImageView ivThumb = (ImageView) findViewById(R.id.ivThumb);
         TextView tvSnippet = (TextView) findViewById(R.id.tvSnippet);
+        Button btViewArticle = (Button) findViewById(R.id.btViewArticle);
 
         if (TextUtils.isEmpty(article.getImageUrl())) {
             ivThumb.setVisibility(View.GONE);
@@ -54,5 +57,14 @@ public class DetailActivity extends AppCompatActivity {
 
         tvHeadline.setText(article.getHeadline());
         tvSnippet.setText(article.getSnippet());
+
+        btViewArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(article.getWebUrl()));
+                startActivity(intent);
+            }
+        });
     }
 }
